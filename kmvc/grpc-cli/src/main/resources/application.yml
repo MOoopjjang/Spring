@@ -1,0 +1,9 @@
+
+
+grpc:
+  client:
+    person:
+      address: 'static://127.0.0.1:9090'
+      negotiationtype: plaintext
+server:
+  port: 8081

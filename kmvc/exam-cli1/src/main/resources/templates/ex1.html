@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <section>
+        <h1>cli</h1>
+
+        <form>
+            <input type="text" placeholder="이름" name="username" id="username" /> <br />
+            <input type="text" placeholder="나이" name="age" id="age" /> <br />
+            <button type="button" onclick="onSend()" >확인</button>
+        </form>
+
+        <script type="text/javascript">
+             <!-- adeeple 포스트백 요청 메소드  -->
+            function adeepleSendPostback(item1 = null , item2 = null , item3 = null , item4 = null){
+                  // 1. 현재 url에서 tokenId 추출
+                  let params = new URL(window.location.href).searchParams;
+                  let tokenId = params.get("tokenId");
+
+                  // 2. adeeple 서비스 연동
+                  //    > url 주소는  아래와 같다
+                  //     - dev :  https://adsub.site/actionLog/postback
+                  //     - 운영 :  https://adeeple.com/actionLog/postback
+                  let url = "https://adeeple.com/actionLog/postback";
+                  let httpRequest = new XMLHttpRequest();
+                  httpRequest.open("POST" , url , true );
+                  httpRequest.setRequestHeader("Content-Type" , "application/json");
+                  let jsonParam = {
+                    "tokenId":tokenId,
+                    "item1":item1,
+                    "item2":item2,
+                    "item3":item3,
+                    "item4":item4
+                  }
+                  httpRequest.send(JSON.stringify(jsonParam));
+                }
+
+             function adeepleSendGetback(item1 = null , item2 = null , item3 = null , item4 = null){
+                 // 1. 현재 url에서 tokenId 추출
+                 let params = new URL(window.location.href).searchParams;
+                 let tokenId = params.get("tokenId");
+
+                 // 2. adeeple 서비스 연동
+                 let url = "https://adeeple.com/actionLog/getback?tokenId="+tokenId+"&item1="+item1+"&item2="+item2+"&item3="+item3+"&item4="+item4;
+                 let httpRequest = new XMLHttpRequest();
+                 httpRequest.open("GET" , url , true );
+                 httpRequest.send();
+             }
+
+
+            function onSend(){
+                // 1. item1 , item2, item3, item4 파라미터에 매칭되는 값을 추출한다.
+                //   > item1 값은 필수 값입니다.
+                let item1 = "cwkim";
+                let item2 = "bbbb";
+                let item3 = "cccc";
+                let item4 = "dddd";
+
+                // 2. adeeple 연동 메소드 ( adeepleSendPostback() ) 호출
+                //    > 특정 파라미터만 보내줄경우 ex ) item1 , item 2
+                //      --> sendPostback(item1="aaa",item2="bbb");
+                //    > 파라미터에 설정할 값이 없을 경우
+                //      --> sendPostback();
+
+                adeepleSendPostback(item1,item2,item3,item4);
+                // adeepleSendGetback(item1,item2,item3,item4);
+                setTimeout(()=>{
+                    // 3. 내부 리다이렉션 페이지가 화면이 있을경우 redirection 코드 호출
+                    //  *** 반드시 2.번 ( adeepleSendPostback( ... ) 함수 호출후에 redirection 코드 호출 ( 순서 중요!!!!! )
+                    // window.location.href="리다이렉션 url"
+                    // window.location.href="/t1/complete"
+                },3000)
+
+
+                // 3. 내부 리다이렉션 페이지가 화면이 있을경우 redirection 코드 호출
+                //  *** 반드시 2.번 ( adeepleSendPostback( ... ) 함수 호출후에 redirection 코드 호출 ( 순서 중요!!!!! )
+                // window.location.href="리다이렉션 url"
+                // window.location.href="/t1/complete"
+
+            }
+        </script>
+    </section>
+
+
+</body>
+</html>

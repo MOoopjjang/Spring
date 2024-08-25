@@ -1,0 +1,61 @@
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    generate-ddl: false
+    show-sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        format_sql: true
+
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mysql://localhost:3306/KMVC_DB?useSSL=false&allowPublicKeyRetrieval=true
+      username: cwkim
+      password: cwkim1234
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+jwt:
+  secret: emlubmF3b3Jrcy11bnRhY3QtbWVkaWNhbC1zZXJ2aWNlLXVzZS1qd3QtY2VydGlmaWVkLWJ5LXppbm5hd29ya3MK
+  access-expire: 3                  # min
+  refresh-expire: 1                 # day
+  get-token: http://localhost:7777/auth/jwt/v1/get
+  refresh-get: http://localhost:7777/auth/jwt/v1/refresh
+
+
+network:
+  time:
+    connection: 2000
+    read: 5000
+  rt:
+    max-conn: 50
+    max-per-route: 20
+
+
+#AWS
+cloud:
+  aws:
+    credentials:
+      access-key: ${ACCESSKEY}
+      secret-key: ${SECRETKEY}
+    s3:
+      bucket: bluebuddytest
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+
+upload:
+  tmp-path: /svc/dev/hdbb/was/web/upload/tmp/
+  mode: local
+  local:
+    root-path: /svc/dev/hdbb/was/web/upload/
+  s3:
+    root-path: upload

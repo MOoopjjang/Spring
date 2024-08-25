@@ -1,0 +1,26 @@
+GET http://localhost:8080/ex8/member/infos/sek
+Accept: application/json
+
+###
+GET http://localhost:8080/ex8/team/info/tottenham
+Accept: application/json
+
+###
+POST http://localhost:8080/ex8/member/regist
+Content-Type: application/json
+
+{
+  "teamName": "tottenham"
+  ,"name": "son sek gu",
+  "age": 40
+}
+
+###
+POST http://localhost:8080/ex8/team/regist
+Content-Type: application/json
+
+{
+  "teamName": "tottenham"
+}
+
+###

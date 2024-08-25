@@ -1,0 +1,10 @@
+POST http://localhost:8080/ex1/member
+Content-Type: application/json
+
+{
+  "teamName": "T1",
+  "name": "bhkim",
+  "age": 20
+}
+
+###

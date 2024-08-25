@@ -1,0 +1,10 @@
+POST http://localhost:7777/auth/jwt/get
+Content-Type: application/json
+
+{
+  "username": "cwkim@zinnaworks.com",
+  "password": "1111",
+  "roles": ["USER"]
+}
+
+###

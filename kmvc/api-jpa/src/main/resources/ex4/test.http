@@ -1,0 +1,4 @@
+GET http://localhost:8080/ex4/test/t1
+Accept: application/json
+
+###

@@ -1,0 +1,46 @@
+# KAFKA CONSUMER
+server:
+  port: 8281
+
+spring:
+  profiles:
+    include: core
+
+#  kafka:
+#    bootstrap-servers: localhost:9092
+#    consumer:
+#      group-id: testgroup
+#      auto-offset-reset: earliest
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#
+#    producer:
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:templates/
+    suffix: .html
+    mode: HTML
+    check-template-location: true
+    template-resolver-order: 0
+  mvc:
+    static-path-pattern: /resources/**
+
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+
+
+kafka:
+  bootstrap-servers: localhost:9092
+  consumer:
+    text-group:
+      gid: tgroup
+      topic: test-topic
+    data-group:
+      gid: dgroup
+      topic: data-topic

@@ -1,0 +1,22 @@
+server:
+  port: 9089
+
+spring:
+  profiles:
+    include: core
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:templates/
+    suffix: .html
+    mode: HTML
+    check-template-location: true
+    template-resolver-order: 0
+  mvc:
+    static-path-pattern: /resources/**
+
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.jdbc.JdbcRepositoriesAutoConfiguration

@@ -1,0 +1,21 @@
+POST http://localhost:8080/rd/t1
+Content-Type: application/json
+
+{
+  "id": "A00001",
+  "name": "xferlog",
+  "age": 10
+}
+
+###
+POST http://localhost:8080/student/save
+Content-Type: application/json
+
+{
+  "name": "xferlog",
+  "age": 10,
+  "addr": "inn",
+  "score": 10
+}
+
+###

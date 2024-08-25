@@ -1,0 +1,13 @@
+GET http://localhost:8080/ex1/team/info/T1
+Accept: application/json
+
+###
+POST http://localhost:8080/ex1/team
+Content-Type: application/json
+
+{
+  "name": "T1"
+}
+
+###
+

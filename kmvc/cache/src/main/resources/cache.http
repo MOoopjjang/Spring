@@ -1,0 +1,11 @@
+GET http://localhost:8080/cache/api/t1
+Accept: application/json
+
+###
+GET http://localhost:8080/cache/api/t2?id=2
+Accept: application/json
+
+
+###
+GET http://localhost:8080/cache/api/t3?id=1
+Accept: application/json

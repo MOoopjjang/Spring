@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Producer</title>
+</head>
+<body>
+    <h1> text </h1>
+    <div>
+        <form name="simpleFrmTest">
+            <input type="text" name="message" id="message" placeholder="메세지를 입력하세요" />
+            <button type="button" onclick="onTextSend()">전송</button>
+        </form>
+    </div>
+
+    <h1> Person </h1>
+    <div>
+        <form name="dataFrmTest">
+            <input type="text" name="name" placeholder="이름" /><br>
+            <input type="text" name="age" placeholder="나이" /><br>
+            <input type="text" name="zipCode" placeholder="우편번호" /><br>
+            <input type="text" name="address" placeholder="주소" /><br>
+            <button type="button" onclick="onDataSend()">전송</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript">
+        function onTextSend(){
+            let $simpleFrmTest = document.simpleFrmTest;
+            let data = {
+                'message': $simpleFrmTest.message.value.trim()
+            };
+            $.ajax({
+                url: "/api/producer/send/simple",
+                type: 'POST',
+                // dataType: "text",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success : function(response){
+                    alert(response);
+                }
+                ,error : function(request, status, error){
+                    alert("error11");
+                }
+            });
+        }
+
+
+        function onDataSend(){
+            let $dataFrmTest = document.dataFrmTest;
+            let data = {
+                'name':$dataFrmTest.name.value.trim(),
+                'age':$dataFrmTest.age.value.trim(),
+                'zipCode':$dataFrmTest.zipCode.value.trim(),
+                'address':$dataFrmTest.address.value.trim()
+            };
+
+
+            $.ajax({
+                url:'/api/producer/send/data',
+                type:'POST',
+                contentType:'application/json',
+                data:JSON.stringify(data),
+                success:(response)=>{
+                    alert(response);
+                },error: (request , status , error)=>{
+                    alert('error');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

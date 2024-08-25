@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/resources/bootstrap-4.6.1-dist/css/bootstrap.css}" rel="stylesheet">
+
+    <script th:src="@{/resources/jquery-3.5.1.min.js}"></script>
+    <script th:src="@{/resources/bootstrap-4.6.1-dist/js/bootstrap.js}"></script>
+    <title>WEB UPLOAD</title>
+</head>
+<body>
+<div style="display: flex;width: 100%;height: 800px;align-items: center;flex-direction: column;">
+    <div>
+        <form th:action="@{/upload/proc}" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <input type="text" name="refId" placeholder="refId" />
+            </div>
+            <div class="row">
+                <input type="text" name="refType" placeholder="refType" />
+            </div>
+            <div>
+                <input type="file" name="file" />
+            </div>
+            <button type="submit" class="btn btn-primary">업로드</button>
+        </form>
+    </div>
+
+    <div>
+        <h5>목록</h5>
+        <table class="table">
+            <thead>
+            <th></th>
+            <th>이름</th>
+            <th>path</th>
+            <th>source</th>
+            <th>key</th>
+            <th></th>
+            <th></th>
+            </thead>
+            <tbody>
+            <tr th:each="m,mStat:${xdata}">
+                <td th:text="${mStat.index+1}"></td>
+                <td th:text="${m.getOrgFilename()}"></td>
+                <td th:text="${m.getFilePath()}"></td>
+                <td th:text="${m.getRefId()}"></td>
+                <td th:text="${m.getRefType()}"></td>
+                <td><button type="button" class="btn btn-primary" th:onclick="'onDelete('+${m.getId()}+')'">삭제</button></td>
+                <td><button type="button" class="btn btn-primary" th:onclick="'onDownload('+${m.getId()}+')'">다운로드</button></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<script>
+    function onDelete(_fileId){
+        alert(_fileId);
+        $.ajax({
+            url:"/upload/delete/"+_fileId,
+            type: "get",
+            success: (result)=>{
+                alert(result.result);
+                window.location.reload(true);
+            },error : (error)=>{
+                alert('error');
+            }
+        });
+    }
+
+    function onDownload(_fileId){
+        alert(_fileId);
+        $.ajax({
+            url:"/upload/download/"+_fileId,
+            type: "get",
+            success: (result)=>{
+                window.location = "/upload/download/"+_fileId;
+            },error : (error)=>{
+                alert('error');
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

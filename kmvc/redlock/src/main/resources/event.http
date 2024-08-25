@@ -1,0 +1,8 @@
+POST http://localhost:8080/event/ticket/apply
+Content-Type: application/json
+
+{
+  "ticketName": "ticket-0"
+}
+
+###

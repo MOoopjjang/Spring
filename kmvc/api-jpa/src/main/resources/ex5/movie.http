@@ -1,0 +1,11 @@
+POST http://localhost:8080/ex5/movie
+Content-Type: application/json
+
+{
+  "name": "Music in the life",
+  "price": 10000,
+  "director": "park",
+  "actor": "kim"
+}
+
+###

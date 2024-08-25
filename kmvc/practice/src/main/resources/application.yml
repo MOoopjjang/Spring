@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+
+
+spring:
+  profiles:
+    include: core
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:templates/
+    suffix: .html
+    mode: HTML
+    check-template-location: true
+    template-resolver-order: 0
+  mvc:
+    static-path-pattern: /resources/**
+#logging:
+#  level:
+#    org.springframework.security: DEBUG

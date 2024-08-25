@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.mooop.grpc.lib";
+option java_outer_classname = "PersonProto";
+
+service MOoop{
+  rpc getPersonInfo (PersonRequest) returns (PersonResponse){
+  }
+}
+
+
+message PersonRequest{
+  string userId=1;
+}
+
+message PersonResponse{
+  string userId=1;
+  string name=2;
+  int32 age=3;
+  string addr=4;
+}
