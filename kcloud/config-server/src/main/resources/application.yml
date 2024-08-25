@@ -1,0 +1,21 @@
+server:
+  port: 8888
+  tomcat:
+    connection-timeout: 2s
+    keep-alive-timeout: 15s
+    threads:
+      max: 50
+      min-spare: 5
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/MOoopjjang/config-repo
+          default-label: main
+          timeout: 5              # 원격저장소 ( git )과 연결시  timeout
+          clone-on-start: true    # 서비스 시작시 원격저장소에 복제본을 로컬에 저장
+          force-pull: true        # 로컬 저자본이 원격 저장소와 다를 경우 무조건 원격저장소로부터 다운로드

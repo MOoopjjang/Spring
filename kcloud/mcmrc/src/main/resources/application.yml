@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: mcmrc
+  config:
+    import: "optional:configserver:"
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8888
+
+server:
+  port: 8082
+
+---
+spring:
+  application:
+    name: mcmrc
+  config:
+    activate:
+      on-profile: local
+  cloud:
+    config:
+      enabled: false
+      uri: http://localhost:8888
+
+server:
+  port: 8088
