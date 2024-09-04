@@ -4,3 +4,4 @@ plugins {
 rootProject.name = "kcloud"
 include("config-server")
 include("mcmrc")
+include("morder")
