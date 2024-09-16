@@ -15,6 +15,16 @@
 > * 설정관리 서버 module  
 > * port : 8888  
 
-> mcmrc  
-> * 설정관리 client module  
-> * port : 8082( local ) or 8088 (dev , prod)
+> edge-server  
+> * Spring Cloud Gateway ( API Gateway Server )
+> * port:9000
+
+> morder  
+> * Spring Cloud Client sample 1  
+> * port: 8089 ( local )
+> * Non-blocking Server  
+
+> mprod  
+> * Spring Cloud Client sample 2  
+> * port:8087
+> * Non-blocking + co-routine

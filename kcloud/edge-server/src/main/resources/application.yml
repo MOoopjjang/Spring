@@ -11,18 +11,14 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: 15s
 
-  cloud:
-    gateway:
-#      default-filters:
-#        - name: GlobalFilter
-#          preLogger: true
-#          postLogger: false
-      routes:
-        - id: morder-route
-          uri: http://localhost:8089/
-          predicates:
-            - Path=/morder/**
-          filters:
-            - AddRequestHeader=morder-token, aabckdilxlsldslk
-            - AddResponseHeader=morder-response, morder
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: morder-route
+#          uri: http://localhost:8089/
+#          predicates:
+#            - Path=/morder/**
+#          filters:
+#            - AddRequestHeader=morder-token, aabckdilxlsldslk
+#            - AddResponseHeader=morder-response, morder
 

@@ -1,12 +1,12 @@
-package com.mooop.mcmrc
+package com.mooop.mprod
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
-@SpringBootApplication
-class McmrcApplication
 
+@SpringBootApplication
+class ProductionApplication
 
 fun main(args:Array<String>){
-    runApplication<McmrcApplication>(*args)
+    runApplication<ProductionApplication>(*args)
 }

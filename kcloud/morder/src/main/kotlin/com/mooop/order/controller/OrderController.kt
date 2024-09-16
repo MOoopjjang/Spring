@@ -24,8 +24,8 @@ class OrderController constructor(
      * 주문정보 ( one )
      */
     @GetMapping("/info/{id}")
-    fun order(@RequestHeader("morder-token") apiToken:String , @PathVariable id:Long ): Mono<OrderInfoDto> {
-        LOGGER.info(">>> apiToken = {}" , apiToken)
+    fun order(@RequestHeader("morder-req-key") seq:String? , @PathVariable id:Long ): Mono<OrderInfoDto> {
+        LOGGER.info(">>> req-seq = {}" , seq)
 
         return  orderService.orderInfo(id)
     }
@@ -34,8 +34,8 @@ class OrderController constructor(
      * 주문정보 ( all )
      */
     @GetMapping("/infos")
-    fun orders(@RequestHeader("morder-token") apiToken:String ,): Flux<OrderInfoDto> {
-        LOGGER.info(">>> apiToken = {}" , apiToken)
+    fun orders(@RequestHeader("morder-req-key") seq:String? ): Flux<OrderInfoDto> {
+        LOGGER.info(">>> req-seq = {}" , seq)
         return orderService.orderAllInfo()
     }
 

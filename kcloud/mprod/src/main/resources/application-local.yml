@@ -1,0 +1,8 @@
+server:
+  netty:
+    connection-timeout: 2s
+    idle-timeout: 15s
+
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 15s
