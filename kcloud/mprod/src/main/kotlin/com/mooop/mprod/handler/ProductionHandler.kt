@@ -1,5 +1,6 @@
 package com.mooop.mprod.handler
 
+import com.mooop.mprod.handler.dto.ProductItemRes
 import com.mooop.mprod.repository.ProductionRepository
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
@@ -21,7 +22,11 @@ class ProductionHandler constructor(
         request.pathVariable("id").toLong().let { id->
             ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValueAndAwait(productionRepository.findById(id))
+                .bodyValueAndAwait(
+                    productionRepository.findById(id)
+                        .let { e-> ProductItemRes("OK" , e.id , e.itemName , e.itemPrice , e.itemComment)
+                        }
+                )
         }
 
     /**
@@ -30,5 +35,9 @@ class ProductionHandler constructor(
     suspend fun productItems():ServerResponse =
         ServerResponse.ok()
             .contentType(MediaType.APPLICATION_JSON)
-            .bodyAndAwait(productionRepository.findByAll())
+            .bodyValueAndAwait(
+                productionRepository.findByAll().map {e->
+                        ProductItemRes("OK" ,e.id , e.itemName , e.itemPrice , e.itemComment)
+                }
+            )
 }

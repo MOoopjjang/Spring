@@ -11,8 +11,15 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: 15s
 
-#  cloud:
-#    gateway:
+  cloud:
+    gateway:
+      httpclient:             #HTTP 클라이언트에 대한 설정속성
+        connect-timeout: 2000 #연결 수립 timeout
+        response-timeout: 5s  #응답을 받을때까지의 timeout
+        pool:
+          type: elastic       # 연결 pool 유형
+          max-idle-time: 15s   # 통신채널이 닫히기 전 대기하는 시간
+          max-life-time: 60s   # 통신 내철이 열려있는 기간
 #      routes:
 #        - id: morder-route
 #          uri: http://localhost:8089/

@@ -22,5 +22,5 @@ class ProductionRepository {
 
     suspend fun findById(id:Long) = productions.first { p->p.id==id }
 
-    suspend fun findByAll() = productions.asFlow()
+    suspend fun findByAll() = productions
 }
