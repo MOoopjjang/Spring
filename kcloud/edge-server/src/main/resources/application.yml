@@ -20,12 +20,68 @@ spring:
           type: elastic       # 연결 pool 유형
           max-idle-time: 15s   # 통신채널이 닫히기 전 대기하는 시간
           max-life-time: 60s   # 통신 내철이 열려있는 기간
-#      routes:
-#        - id: morder-route
-#          uri: http://localhost:8089/
-#          predicates:
-#            - Path=/morder/**
-#          filters:
-#            - AddRequestHeader=morder-token, aabckdilxlsldslk
-#            - AddResponseHeader=morder-response, morder
+#      default-filters:
+#        - name: Retry               # 필터이름
+#          args:
+#            retries: 3              # 최대 3회 재시도
+#            methods: GET
+#            series: SERVER_ERROR    # 5xx 오류에 대해서만 재시도
+#            exceptions: java.io.IOException,java.util.concurrent.TimeoutException   # 지정한 예외가 발생할 때만 재시도
+#            backoff:
+#              firstBackoff: 50ms
+#              maxBackOff: 500ms
+#              factor: 2
+#              basedOnPreviousValue: false
+      routes:
+        - id: morder-route
+          uri: http://localhost:8089/
+          predicates:
+            - Path=/morder/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: orderCircuitBreaker
+                fallbackUri: forward:/morder-fallback
+            - AddRequestHeader=morder-token, aabckdilxlsldslk
+            - AddResponseHeader=morder-response, morder
+        - id: mprod-route
+          uri: http://localhost:8087/
+          predicates:
+            - Path=/mprod/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: prodCircuitBreaker
 
+
+resilience4j:
+  retry:
+    configs:
+      defaultHttpRetry:
+        maxAttempts: 3
+        waitDuration: 500ms
+        enableExponentialBackoff: true
+        
+  circuitbreaker:
+    configs:
+      default:                                        # 모든 서킷브레이커에 대한 기본설정
+        slidingWindowSize: 20                         # 회로가 폐쇄된 상태일 때 호출의 결과를 기록하는데 사용하는 슬라이딩 윈도의 크기
+        permittedNumberOfCallsInHalfOpenState: 5      # 회로가 반개방 상태일 때 허용되는 호출의 수
+        failureRateThreshold: 2                       # 실패율이 임계값 이상이면 회로는 개방 상태로 바뀐다.
+        waitDurationInOpenState: 15000                # 개방 상태에서 반개방 상태로 가기까지 기다릴 시간 ( 밀리초 )
+#    instances:
+#      orderCircuitBreaker:
+#        slidingWindowSize: 20
+#        permittedNumberOfCallsInHalfOpenState: 5
+#        failureRateThreshold: 2
+#        waitDurationInOpenState: 15000
+
+
+  timelimiter:
+    configs:
+      default:      # 모든 시간 제한에 대한 기본설정
+        timeoutDuration: 5s   # 타임아웃 설정 ( 초 )
+
+logging:
+  level:
+    io.github.resilience4j: DEBUG

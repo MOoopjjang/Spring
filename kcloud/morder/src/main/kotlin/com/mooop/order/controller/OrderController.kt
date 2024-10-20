@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import java.util.concurrent.TimeoutException
 
 
 @RestController
@@ -39,5 +40,8 @@ class OrderController constructor(
         return orderService.orderAllInfo()
     }
 
-
+    @GetMapping("/err/to")
+    fun timeOut() : Mono<String> {
+        throw TimeoutException("Test Exception")
+    }
 }
