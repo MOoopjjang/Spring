@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 
+
 @Service
 class UserAccessHistoryDomain : UserAccessHistoryInterface {
     val log = LoggerFactory.getLogger(UserAccessHistoryDomain::class.java)

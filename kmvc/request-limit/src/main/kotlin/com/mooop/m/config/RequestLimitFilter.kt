@@ -1,4 +1,4 @@
-package com.mooop.m.filters
+package com.mooop.m.config
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.filter.OncePerRequestFilter

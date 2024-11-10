@@ -28,12 +28,10 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-//    testImplementation("org.junit.platform:junit-platform-launcher:1.5.2")
-//    testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
-
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
 }
 
-//test {
-//    useJUnitPlatform()
-//}
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
