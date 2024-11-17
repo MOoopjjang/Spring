@@ -13,8 +13,16 @@ spring:
 
 
 app:
-  limit-time-section: 10    # 시간구간
-  limit-count: 10           # 접속제한횟수
-  limit-urls:
-    - /request-limit/dl
-    - /request-limit/info
+  global:
+    enable: false
+    limit-time-section: 10
+    limit-count: 2
+    priority: 1
+  user:
+    enable: true
+    limit-time-section: 10    # 시간구간
+    limit-count: 5           # 접속제한횟수
+    priority: 2
+    limit-urls:
+      - /request-limit/dl
+      - /request-limit/info

@@ -1,6 +1,10 @@
 package com.mooop.m.config
 
-import org.springframework.beans.factory.annotation.Value
+import com.mooop.m.infra.filters.traffic.TrafficLimitFilterChain
+import com.mooop.m.infra.filters.traffic.exception.TrafficLimitFilterException
+import com.mooop.m.infra.filters.traffic.query.TrafficFilterQueryInterface
+import org.slf4j.LoggerFactory
+import org.springframework.http.HttpStatus
 import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain
 import javax.servlet.annotation.WebFilter
@@ -9,24 +13,26 @@ import javax.servlet.http.HttpServletResponse
 
 
 //@Component
-@WebFilter(urlPatterns = ["/request-limit/dl"])
-class RequestLimitFilter : OncePerRequestFilter() {
+@WebFilter(urlPatterns = ["/access/user"])
+class RequestLimitFilter constructor(
+    val trafficLimitFilterChain: TrafficLimitFilterChain
+//    ,val trafficFilterQueryInterface: TrafficFilterQueryInterface
+): OncePerRequestFilter() {
 
-//    val logger = LoggerFactory.getLogger(RequestLimitFilter::class.java)
-
-    @Value("\${app.limit-count}")
-    lateinit var timeSection:Integer
-
-    @Value("\${app.limit-time-section}")
-    lateinit var limitCount:Integer
+    val log = LoggerFactory.getLogger(RequestLimitFilter::class.java)
 
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-
-        println(">> timeSection = ${timeSection} , limitCount = ${limitCount} <<" )
+        try{
+            trafficLimitFilterChain.exec(request)
+        }catch (fe: TrafficLimitFilterException){
+            response.status = HttpStatus.INTERNAL_SERVER_ERROR.value()
+        }catch (e : Exception){
+            response.status = HttpStatus.INTERNAL_SERVER_ERROR.value()
+        }
 
 
         filterChain.doFilter(request,response)
