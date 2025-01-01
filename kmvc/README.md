@@ -44,4 +44,7 @@
 > >* SpringSecurity 테스트용 Module  
 
 > web  
-> >* Thymeleaf를 View Template로 사용하는 웹서비스 테스트용 Module
+> >* Thymeleaf를 View Template로 사용하는 웹서비스 테스트용 Module  
+
+> request-limit  
+> >> 접속제한 관련 테스트
