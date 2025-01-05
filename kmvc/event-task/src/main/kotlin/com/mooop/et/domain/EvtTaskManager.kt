@@ -34,9 +34,12 @@ class EvtTaskManager {
         }
     }
 
-
+    /**
+     * job 실행
+     */
     fun execute(job:EventJobModel<Person>):EventResModel{
         val pendingWorker = workerMapper.get(WorkerType.PENDING) as TaskPendingExecutor
+        /** valid job */
         pendingWorker.doTransfer { job->
             val runningWorker = workerMapper.get(WorkerType.RUNNER) as TaskRunExecutor
             runningWorker.doFail { job->
@@ -44,6 +47,11 @@ class EvtTaskManager {
                 failedWorker.add(job)
             }
             runningWorker.add(job)
+        }
+        /** invalid job */
+        pendingWorker.doFail { job->
+            val failedWorker = workerMapper.get(WorkerType.FAILED) as TaskFailExecutor
+            failedWorker.add(job)
         }
         pendingWorker.add(job)
 

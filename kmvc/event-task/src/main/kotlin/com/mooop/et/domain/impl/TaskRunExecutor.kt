@@ -4,7 +4,6 @@ import com.mooop.et.domain.BasicTaskExecutor
 import com.mooop.et.domain.TaskFailInterface
 import com.mooop.et.domain.enums.EventActionType
 import com.mooop.et.domain.model.EventJobModel
-import com.mooop.et.domain.model.EventResModel
 
 class TaskRunExecutor<T> : BasicTaskExecutor<T>() , TaskFailInterface<T> {
     private val MAX_QUEUE_SIZE:Int = 10
@@ -13,11 +12,8 @@ class TaskRunExecutor<T> : BasicTaskExecutor<T>() , TaskFailInterface<T> {
         while(!isStop){
             val task = queue.take()
             try{
-                if(task.actionType == EventActionType.UNKNOWN){
-                    failCb(task)
-                }else{
-                    println(">>>execute job = ${task.body} - >action = ${task.actionType}")
-                }
+                println(">>>TaskRunExecutor job = ${task.body} - >action = ${task.actionType}")
+                Thread.sleep(2000)
             }catch (e:Exception){
                 println("e = ${e.message}")
                 failCb(task)
